@@ -5,7 +5,7 @@ public class Planet{
 	public double yyVel;
 	public double mass;
 	public String imgFileName;
-	public   double G=6.67e-11;
+	   double G=6.67e-11;
 	public Planet(double xP,double yP,double xV,double yV,double m,String img){
 		xxPos=xP;
 		yyPos=yP;
@@ -19,12 +19,10 @@ public class Planet{
 		yyPos=b.yyPos;
 		xxVel=b.xxVel;
 		yyVel=b.yyVel;
+		mass=b.mass;
 		imgFileName=b.imgFileName;
 	}
-	public Planet(){
-		xxPos=yyPos=xxVel=yyVel=0;
-	}
-	public double  abs(double c){
+	 double  abs(double c){
 		if(c<0)
 			return -c;
 		return c;
@@ -65,7 +63,7 @@ public class Planet{
 		}
 		return netforce;
 	}
-	public static void windowPosSum(int a[],int n){
+	 static void windowPosSum(int a[],int n){
 		for(int i=0;i<a.length;i++){
 			if(a[i]<=0)
 				continue;
