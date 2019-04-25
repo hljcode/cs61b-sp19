@@ -12,7 +12,7 @@ public class Planet{
 		xxVel=xV;
 		yyVel=yV;
 		mass=m;
-		imgFileName="images/"+img;
+		imgFileName=img;
 	}
 	public Planet(Planet b){
 		xxPos=b.xxPos;
