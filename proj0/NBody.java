@@ -70,7 +70,7 @@ public class NBody{
 	System.out.println(B.length);
 	System.out.println(radius);
 	for(int i=0;i<B.length;i++){
-		System.out.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n"B[i].xxPos,B[i].yyPos,B[i].xxVel,B[i].yyVel,B[i].mass,B[i].imgFileName);
+		System.out.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",B[i].xxPos,B[i].yyPos,B[i].xxVel,B[i].yyVel,B[i].mass,B[i].imgFileName);
 	}
 }
 }
