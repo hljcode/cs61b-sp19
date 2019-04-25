@@ -1,5 +1,5 @@
 public class NBody{
-	public static Planet[] readBodies(String args){
+	public static Planet[] readPlanets(String args){
 		In in=new In(args);
 		if(in.isEmpty()){
 			System.out.println("please provide an effective filenam");
@@ -7,7 +7,7 @@ public class NBody{
 		}
 		int count=in.readInt();
 		double radius=in.readDouble();
-		Body[] B=new Body[count];
+		Planet[]  B=new Planet[count];
 		for(int i=0;i<count;i++){
 			double xxPos=in.readDouble();
 			double yyPos=in.readDouble();
