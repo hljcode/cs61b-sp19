@@ -1,5 +1,5 @@
 public class NBody{
-	public static Body[] readBodies(String args){
+	public static Planet[] readBodies(String args){
 		In in=new In(args);
 		if(in.isEmpty()){
 			System.out.println("please provide an effective filenam");
@@ -15,7 +15,7 @@ public class NBody{
 			double yyVel=in.readDouble();
 			double mass=in.readDouble();
 			String imgFileNmae=in.readString();
-			B[i]=new Body(xxPos,yyPos,xxVel,yyVel,mass,imgFileNmae);
+			B[i]=new Planet(xxPos,yyPos,xxVel,yyVel,mass,imgFileNmae);
 //			B[i]=new Body(in.readDouble(),in.readDouble(),in.readDouble(),in.readDouble(),in.readDouble(),in.readString());
 		}
 
@@ -39,7 +39,7 @@ public class NBody{
 		dt=Double.parseDouble(args[1]);
 		String filename=args[2];
 		double radius=readRadius(filename);
-		Body[] B=readBodies(filename);
+		Planet[] B=readBodies(filename);
 		StdDraw.setScale(-2*radius,2*radius);
 		StdDraw.picture(0,0,"images/starfield.jpg");
 		StdDraw.enableDoubleBuffering();
