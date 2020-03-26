@@ -1,4 +1,4 @@
-/*import org.junit.Test;
+import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestPalindrome {
@@ -13,6 +13,31 @@ public class TestPalindrome {
         for (int i = 0; i < "persiflage".length(); i++) {
             actual += d.removeFirst();
         }
+        System.out.println(actual);
         assertEquals("persiflage", actual);
+    } //Uncomment this class once you've created your Palindrome class. */
+
+    @Test
+    public void testisPalindrome(){
+
+        assertTrue(palindrome.isPalindrome(""));
+        assertTrue(palindrome.isPalindrome("A"));
+
+        //"Horse","aaaaab","Aa".etc shouldn't pass the test
+        assertFalse(palindrome.isPalindrome("Horse"));
+        assertFalse(palindrome.isPalindrome("aaaab"));
+        assertFalse(palindrome.isPalindrome("Aa"));
+        assertTrue(palindrome.isPalindrome("HOH"));
+        assertFalse(palindrome.isPalindrome("Fook"));
+        assertTrue(palindrome.isPalindrome("aaaacaaaa"));
+        assertTrue(palindrome.isPalindrome("baabbaab"));
+        assertTrue(palindrome.isPalindrome("FFFOFFF"));
+        System.out.println("Well Down");
     }
-}     Uncomment this class once you've created your Palindrome class. */
+
+    public static void main(String[] args){
+        TestPalindrome testPalindrome=new TestPalindrome();
+      // testPalindrome.testWordToDeque();
+      testPalindrome.testisPalindrome();
+    }
+}
