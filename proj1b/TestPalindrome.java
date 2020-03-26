@@ -13,7 +13,7 @@ public class TestPalindrome {
         for (int i = 0; i < "persiflage".length(); i++) {
             actual += d.removeFirst();
         }
-        System.out.println(actual);
+       // System.out.println(actual);
         assertEquals("persiflage", actual);
     } //Uncomment this class once you've created your Palindrome class. */
 
@@ -32,7 +32,7 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("aaaacaaaa"));
         assertTrue(palindrome.isPalindrome("baabbaab"));
         assertTrue(palindrome.isPalindrome("FFFOFFF"));
-        System.out.println("Well Down");
+       // System.out.println("Well Down");
     }
 
     public static void main(String[] args){
