@@ -1,157 +1,132 @@
-/** ArrayDeque
- *1.the nextFirst always points to the position the new element will be put in
- *2.the nextLast  always points to the position the last element will be put in
- *3 the size always equals the number of elements in the array
- */
-public class ArrayDeque<Item>{
-    private int size;
-    private int nextFirst;
-    private int nextLast;
-    private Item[] item;
+public class ArrayDeque<T>{
+    int count;
+    int nextFirst,nextLast;
+    T[] AD;
 
-    private int minusOne(int index){
-        int i=index-1;
-        if(i<0)
-            i=item.length-1;
-        return i;
+    public class ArrayDeque(){
+        count=0;
+        nextFirst=7;
+        nextLast=0;
+        AD=(T[]) new Object[8];
     }
 
-    private int plusOne(int index){
-        int i=index+1;
-        if(i==item.length)
-            i=0;
-        return i;
+    public class ArrayDeque(T[] source){
+        T[] target=(T[]) new Object[source.length];
+        System.arraycopy(source,0,target,0,source.length);
+        count=0;
+        nextFirst=target.length-1;
+        nextLast=0;
+        AD=target;
     }
 
-    public boolean isEmpty(){
-        if(size==0)
-            return true;
-        return false;
+    private int minusOne(int Index){
+        return (Index-1+AD.length)%AD.length;
     }
 
-    public void addFirst(Item X){
-        if(size==item.length)
-            resize(2*item.length);
-        item[nextFirst]=X;
+    private int plusOne(int Index){
+        return (Index+1)%AD.length;
+    }
+
+    public void resize(int Capacity){
+        T[] target=(T[]) new Object[Capacity];
+        int begin,end;
+        begin=plusOne(nextFirst);
+        end=minusOne(nextLast);
+
+        if(begin>end){
+            int back_num=AD.length-begin;
+            int front_num=end;
+            System.arraycopy(target,0,AD,0,back_num);
+            System.arraycopy(target,back_num,AD,0,end);
+        }else
+        {
+            System.arraycopy(target,0,AD,begin,end-begin+1);
+        }
+        count=end-begin+1;
+        nextFirst=Capacity-1;
+        nextLast=count;
+        AD=target;
+
+    }
+
+    public void addFirst(T Item){
+        if(count==AD.length)
+            resize(AD.length*2);
+        AD[nextFirst]=Item;
         nextFirst=minusOne(nextFirst);
-        size=size+1;
+        count++;
     }
 
-    public void addLast(Item X){
-        if(size==item.length)
-            resize(2*item.length);
-        item[nextLast]=X;
+    public void addLast(T Item){
+        if(count==AD.length)
+            resize(AD.length*2);
+        AD[nextLast]=Item;
         nextLast=plusOne(nextLast);
-        size=size+1;
+        count++;
+    }
+
+    public T removeFirst(){
+        if(isEmpty())
+            return null;
+        if(nearEmpty())
+            resize(AD.length/2);
+        T value;
+        int begin=plusOne(nextFirst);
+        value=AD[begin];
+        nextFirst=begin;
+        count--;
+        return value;
+    }
+
+    public T removeLast(){
+        if(isEmpty())
+            return null;
+        if(nearEmpty())
+            resize(AD.length/2);
+        T value;
+        int end=minusOne(nextLast);
+        value=AD[end];
+        nextLast=end;
+        count--;
+        return value;
     }
 
     public void printDeque(){
-        int i=0;
-        int firstPos=plusOne(nextFirst);
-        while(i<size){
-            System.out.print(item[firstPos]+" ");
-            firstPos=plusOne(firstPos);
-            i=i+1;
-        }
-        System.out.println();
-    }
-
-  public Item get(int index){
-        if(index>size)
-            return null;
-        int ptr=plusOne(nextFirst);
-        for(int i=0;i<index;i=i+1){
-            ptr=plusOne(ptr);
-        }
-        return item[ptr];
-    }
-
-    public Item get_lefthanded(int index){
-        if(index>size)
-            return null;
-        int ptr=minusOne(nextLast);
-        for(int i=0;i<index;i++){
-            ptr=minusOne(ptr);
-        }
-        return item[ptr];
-    }
-
-    public Item removeFirst(){
         if(isEmpty())
-            return null;
-        if(((float)size/item.length<0.25)&&(item.length>=16))
-            resize(item.length/2);
-        int fP=plusOne(nextFirst);
-        Item first=item[fP];
-        item[fP]=null;
-        nextFirst=fP;
-        size=size-1;
-        return first;
+            return;
+        int begin,end;
+        begin=plusOne(nextFirst);
+        end=minusOne(nextLast);
+
+        if(begin>end){
+            for(int i=begin;i<AD.length;i++)
+                System.out.println(AD[i]+" ");
+            for(int i=0;i<=end;i++)
+                System.out.println(AD[i]+" ");
+        }else
+        {
+            for(int i=begin;i<=end;i++)
+                System.out.println(AD[i]+" ");
+        }
     }
 
-    public Item removeLast(){
-        if(isEmpty())
+    public T get(int Index){
+        if((Index<0)||(Index>AD.length-1))
             return null;
-        if(((float)size/item.length<0.25)&&item.length>=16)
-            resize(item.length/2);
-        int lP=minusOne(nextLast);
-        Item last=item[lP];
-        item[lP]=null;
-        nextLast=lP;
-        size=size-1;
-        return last;
+        int begin,realIndex;
+        begin=plusOne(nextFirst);
+        realIndex=(begin+Index)%AD.length;
+        return AD[realIndex];
     }
 
-    public int length(){
-        return item.length;
-    }
-    public void resize(int capacity){
-        Item[] newItem=(Item[]) new Object[capacity];
-        int beginning=plusOne(nextFirst);
-        int end=minusOne(nextLast);
-        if(beginning>end){
-            int sizeOfFirstHalf=item.length-beginning;
-            int sizeOfSecondHalf=size-sizeOfFirstHalf;
-            System.arraycopy(item,beginning,newItem,0,sizeOfFirstHalf);
-            System.arraycopy(item,0,newItem,sizeOfFirstHalf,sizeOfSecondHalf);
-        }
-        else{
-            System.arraycopy(item,beginning,newItem,0,size);
-        }
-        nextFirst=newItem.length-1;
-        nextLast=size;
-        item=newItem;
+    public boolean isEmpty(){
+        return count==0;
     }
 
     public int size(){
-        return size;
+        return count;
     }
-
-
-    private int pos(int index){
-        int beginning=plusOne(nextFirst);
-        int actualPos=(index+beginning)%(item.length);
-        return actualPos;
-    }
-
- /* public Item get(int index){
-        if(index<size)
-            return item[pos(index)];
-        return null;
-    }
-*/
-    public ArrayDeque(){
-        size=0;
-        nextFirst=0;
-        nextLast=1;
-        item=(Item[])new Object[8];
-    }
-
-    public ArrayDeque(Item X){
-        item=(Item[])new Object[8];
-        item[0]=X;
-        size=1;
-        nextFirst=7;
-        nextLast=1;
+    private boolean nearEmpty(){
+        return (count>=16)&&(count*1.0/AD.length<0.25);
     }
 }
